@@ -2,7 +2,10 @@
 category: 'hero section'
 title: 'Frontend Developer'
 subtitle: 'Omid Badkoubeh'
-content: 'JavaScript Engineer with experience in several projects developed in React.js and React Native. With knowledge  user interface, testing, and debugging processes. also worked with Apollo and GraphQL and Design Systems like Material UI.'
+content: 'Javascript Engineer with experience in several projects developed in React.js and React Native. 
+Also worked with Apollo and GraphQL. 
+Skilled in implementing user interface, Testing and Debugging.
+With good knowledge of Design Systems such as Material UI and CSS frameworks like TailwindCSS.'
 linkTo: '/resume/'
 linkText: 'View My Profile'
 ---
