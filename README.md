@@ -1,1 +1,0 @@
-# omidbadkoubeh.github.io
