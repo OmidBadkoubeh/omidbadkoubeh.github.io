@@ -1,0 +1,40 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.exclude": {
+    "**/logs": true,
+    "**/*.log": true,
+    "**/npm-debug.log*": true,
+    "**/yarn-debug.log*": true,
+    "**/yarn-error.log*": true,
+    "**/pids": true,
+    "**/*.pid": true,
+    "**/*.seed": true,
+    "**/*.pid.lock": true,
+    "**/.dummy": true,
+    "**/lib-cov": true,
+    "**/coverage": true,
+    "**/.nyc_output": true,
+    "**/.grunt": true,
+    "**/.snapshots/": true,
+    "**/bower_components": true,
+    "**/.lock-wscript": true,
+    "build/Release": true,
+    "**/node_modules/": true,
+    "**/jspm_packages/": true,
+    "**/typings/": true,
+    "**/.npm": true,
+    "**/.eslintcache": true,
+    "**/.node_repl_history": true,
+    "**/*.tgz": true,
+    "**/.yarn-integrity": true,
+    "**/.next/": true,
+    "**/dist/": true,
+    "**/build/": true,
+    "**/.now/": true,
+    "**/.vercel/": true,
+    "**/.google.json": true
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///home/omid/workspace/personal-workspace/nextjs-notion-starter-kit/.github/workflows/build.yml"
+  }
+}
