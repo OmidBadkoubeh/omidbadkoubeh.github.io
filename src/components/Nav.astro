@@ -28,6 +28,15 @@ const initials = profile.name
     </nav>
 
     <div class="nav-actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle color theme"
+        data-theme-toggle
+      >
+        <Icon name="sun" size={18} class="i-sun" />
+        <Icon name="moon" size={18} class="i-moon" />
+      </button>
       <a class="btn btn-ghost nav-resume" href={profile.resumeUrl}>
         <Icon name="download" size={16} />
         Resume
@@ -65,7 +74,7 @@ const initials = profile.name
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(11, 11, 16, 0.7);
+    background: var(--nav-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--color-border);
@@ -148,6 +157,23 @@ const initials = profile.name
 
   .nav-resume { padding: 0.55rem 1rem; min-height: 40px; }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-secondary);
+    cursor: pointer;
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+
+  .theme-toggle:hover { border-color: var(--color-accent); color: var(--color-fg); }
+
+
   .nav-toggle {
     display: none;
     align-items: center;
@@ -170,7 +196,7 @@ const initials = profile.name
     gap: var(--space-xs);
     padding: var(--space-md) var(--space-lg) var(--space-lg);
     border-top: 1px solid var(--color-border);
-    background: rgba(11, 11, 16, 0.96);
+    background: var(--menu-bg);
   }
 
   .mobile-menu[data-open] { display: flex; }
@@ -216,6 +242,35 @@ const initials = profile.name
       menu.querySelectorAll('a').forEach((a) =>
         a.addEventListener('click', () => setOpen(false))
       );
+    }
+
+    // Theme toggle. The head bootstrap already set data-theme before paint.
+    const themeBtn = document.querySelector('[data-theme-toggle]');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const colors = { dark: '#0b0b10', light: '#f4f6fb' };
+    const syncTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      if (meta) meta.setAttribute('content', colors[t]);
+      if (themeBtn) {
+        themeBtn.setAttribute('aria-pressed', String(t === 'light'));
+        themeBtn.setAttribute(
+          'aria-label',
+          t === 'light' ? 'Switch to dark theme' : 'Switch to light theme'
+        );
+      }
+    };
+    if (themeBtn) {
+      syncTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+      themeBtn.addEventListener('click', () => {
+        const next =
+          document.documentElement.getAttribute('data-theme') === 'light'
+            ? 'dark'
+            : 'light';
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+        syncTheme(next);
+      });
     }
 
     // Active-section highlight via IntersectionObserver.

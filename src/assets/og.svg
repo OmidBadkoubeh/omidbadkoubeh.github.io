@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="name" x1="80" y1="0" x2="900" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="0.55" stop-color="#7DD3FC"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.05" r="0.7">
+      <stop stop-color="#3B82F6" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.05" cy="0.9" r="0.6">
+      <stop stop-color="#22D3EE" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#94A3B8" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0B0B10"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+  <rect x="1" y="1" width="1198" height="628" fill="none" stroke="#1E293B" stroke-width="2"/>
+
+  <!-- HUD corner brackets -->
+  <path d="M40 40 H92 M40 40 V92" stroke="#22D3EE" stroke-width="2" opacity="0.7" fill="none"/>
+  <path d="M1160 590 H1108 M1160 590 V538" stroke="#22D3EE" stroke-width="2" opacity="0.7" fill="none"/>
+
+  <!-- brand mark -->
+  <rect x="80" y="96" width="64" height="64" rx="14" fill="url(#mark)"/>
+  <text x="112" y="138" text-anchor="middle" font-family="monospace" font-size="26" font-weight="700" fill="#04070D">OB</text>
+
+  <!-- kicker -->
+  <circle cx="90" cy="250" r="7" fill="#22D3EE"/>
+  <text x="108" y="257" font-family="monospace" font-size="24" letter-spacing="6" fill="#22D3EE">SOFTWARE ENGINEER · REMOTE</text>
+
+  <!-- name -->
+  <text x="76" y="400" font-family="'DejaVu Sans', sans-serif" font-size="132" font-weight="700" letter-spacing="-3" fill="url(#name)">Omid Badkoubeh</text>
+
+  <!-- tagline -->
+  <text x="80" y="470" font-family="'DejaVu Sans', sans-serif" font-size="34" fill="#94A3B8">I design and build fast, resilient systems for the web.</text>
+
+  <!-- url -->
+  <text x="80" y="560" font-family="monospace" font-size="24" letter-spacing="2" fill="#64748B">omidbadkoubeh.github.io</text>
+</svg>
