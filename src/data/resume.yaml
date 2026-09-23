@@ -54,7 +54,7 @@ skills:
 
 experience:
   - role: Senior Frontend Engineer, Frontend Team Lead
-    company: Corvic / Codaze
+    company: Corvic
     period: 04/2024 – 05/2026
     location: Remote
     stack: [Next.js, tRPC, Three.js, WebGL, Monorepo, Jest]
