@@ -21,7 +21,7 @@ Senior Frontend Engineer with 7+ years of experience building high-performance, 
 
 ## Professional Experience
 
-### Senior Frontend Engineer, Frontend Team Lead — Corvic / Codaze
+### Senior Frontend Engineer, Frontend Team Lead — Corvic
 
 04/2024 – 05/2026 | Remote
 
