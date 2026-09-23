@@ -1,7 +1,9 @@
 ---
-import { about } from '../data/portfolio';
+import { getPortfolio } from '../lib/portfolio';
 import SectionHeading from './SectionHeading.astro';
 import Icon from './Icon.astro';
+
+const { about } = await getPortfolio();
 ---
 
 <section class="section" id="about">

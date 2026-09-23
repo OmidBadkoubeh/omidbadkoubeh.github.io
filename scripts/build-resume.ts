@@ -1,24 +1,36 @@
 // -----------------------------------------------------------------------------
-// Build a styled PDF from the resume Markdown (single source of truth).
+// Generate the downloadable resume artifacts from the structured SOT.
 //
-//   npm run resume:pdf     # regenerate public/resume.pdf on demand
-//   npm run build          # `prebuild` runs this automatically before astro
+//   src/data/resume.yaml  ──►  public/resume.md   (data → Markdown)
+//                         └─►  public/resume.pdf  (Markdown → styled PDF)
 //
-// Uses puppeteer-core against a system Chrome/Chromium — no browser download.
-// Set PUPPETEER_EXECUTABLE_PATH to override the detected browser.
-// If no browser is found, it warns and exits 0 so site builds never break
-// (the last committed public/resume.pdf is used instead).
+//   npm run resume     # regenerate both on demand
+//   npm run build      # `prebuild` runs this automatically
+//
+// PDF uses puppeteer-core against a system Chrome/Chromium — no browser
+// download. Set PUPPETEER_EXECUTABLE_PATH to override. If no browser is found
+// the Markdown is still written and the PDF step is skipped (exit 0), so site
+// builds never break and the last committed public/resume.pdf is reused.
 // -----------------------------------------------------------------------------
 
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import puppeteer from 'puppeteer-core';
+import { loadResume, resumeToMarkdown } from '../src/lib/resume.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const mdPath = resolve(root, 'Omid_Badkoubeh_Resume.md');
-const outPath = resolve(root, 'public', 'resume.pdf');
+const yamlPath = resolve(root, 'src', 'data', 'resume.yaml');
+const mdOut = resolve(root, 'public', 'resume.md');
+const pdfOut = resolve(root, 'public', 'resume.pdf');
+
+const resume = loadResume(yamlPath);
+const markdown = resumeToMarkdown(resume);
+
+mkdirSync(dirname(mdOut), { recursive: true });
+writeFileSync(mdOut, markdown);
+console.log(`[resume] Wrote ${mdOut}`);
 
 const CHROME_CANDIDATES = [
   process.env.PUPPETEER_EXECUTABLE_PATH,
@@ -39,14 +51,13 @@ const executablePath = CHROME_CANDIDATES.find((p) => p && existsSync(p));
 
 if (!executablePath) {
   console.warn(
-    '[resume] No Chrome/Chromium found — skipping PDF generation.\n' +
+    '[resume] No Chrome/Chromium found — wrote Markdown, skipped PDF.\n' +
       '         Install Chrome or set PUPPETEER_EXECUTABLE_PATH to regenerate resume.pdf.'
   );
   process.exit(0);
 }
 
-const md = readFileSync(mdPath, 'utf8');
-const body = await marked.parse(md, { async: true });
+const body = await marked.parse(markdown, { async: true });
 
 const html = `<!doctype html>
 <html lang="en">
@@ -62,49 +73,19 @@ const html = `<!doctype html>
     line-height: 1.42;
     margin: 0;
   }
-  h1 {
-    font-size: 23pt;
-    letter-spacing: -0.4px;
-    color: #0f172a;
-    margin: 0 0 2px;
-  }
-  /* role line (first paragraph after the name) */
-  h1 + p {
-    font-size: 12pt;
-    font-weight: 600;
-    color: #2563eb;
-    margin: 0 0 4px;
-  }
-  /* contact line (second paragraph after the name) */
+  h1 { font-size: 23pt; letter-spacing: -0.4px; color: #0f172a; margin: 0 0 2px; }
+  h1 + p { font-size: 12pt; font-weight: 600; color: #2563eb; margin: 0 0 4px; }
   h1 + p + p {
-    font-size: 9pt;
-    color: #475569;
-    margin: 0 0 4px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #e2e8f0;
+    font-size: 9pt; color: #475569; margin: 0 0 4px;
+    padding-bottom: 8px; border-bottom: 2px solid #e2e8f0;
   }
   h2 {
-    font-size: 10.5pt;
-    text-transform: uppercase;
-    letter-spacing: 1.1px;
-    color: #2563eb;
-    border-bottom: 1px solid #dbe3ef;
-    padding-bottom: 3px;
-    margin: 15px 0 8px;
-    break-after: avoid;
+    font-size: 10.5pt; text-transform: uppercase; letter-spacing: 1.1px;
+    color: #2563eb; border-bottom: 1px solid #dbe3ef; padding-bottom: 3px;
+    margin: 15px 0 8px; break-after: avoid;
   }
-  h3 {
-    font-size: 10.6pt;
-    color: #0f172a;
-    margin: 11px 0 1px;
-    break-after: avoid;
-  }
-  /* date/location line under each role */
-  h3 + p {
-    font-size: 8.9pt;
-    color: #64748b;
-    margin: 0 0 4px;
-  }
+  h3 { font-size: 10.6pt; color: #0f172a; margin: 11px 0 1px; break-after: avoid; }
+  h3 + p { font-size: 8.9pt; color: #64748b; margin: 0 0 4px; }
   p { margin: 0 0 6px; }
   ul { margin: 3px 0 8px; padding-left: 16px; }
   li { margin-bottom: 3px; break-inside: avoid; }
@@ -124,14 +105,13 @@ const browser = await puppeteer.launch({
 try {
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'load' });
-  mkdirSync(dirname(outPath), { recursive: true });
   await page.pdf({
-    path: outPath,
+    path: pdfOut,
     format: 'A4',
     printBackground: true,
     margin: { top: '14mm', bottom: '14mm', left: '15mm', right: '15mm' },
   });
-  console.log(`[resume] Wrote ${outPath}`);
+  console.log(`[resume] Wrote ${pdfOut}`);
 } finally {
   await browser.close();
 }

@@ -1,6 +1,8 @@
 ---
-import { profile, stats } from '../data/portfolio';
+import { getPortfolio } from '../lib/portfolio';
 import Icon from './Icon.astro';
+
+const { profile, stats } = await getPortfolio();
 ---
 
 <section class="hero" id="top">

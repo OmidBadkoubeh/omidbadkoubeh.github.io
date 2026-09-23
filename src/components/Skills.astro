@@ -1,6 +1,8 @@
 ---
-import { skills, education } from '../data/portfolio';
+import { getPortfolio } from '../lib/portfolio';
 import SectionHeading from './SectionHeading.astro';
+
+const { skills, education } = await getPortfolio();
 ---
 
 <section class="section" id="skills">

@@ -1,7 +1,6 @@
 // -----------------------------------------------------------------------------
 // Presentation config — the site "chrome" that is NOT part of the resume text.
-// Resume content itself lives in Omid_Badkoubeh_Resume.md (single source of
-// truth). Tune hero copy, stats, nav, and per-entry visual extras here.
+// Resume content itself lives in src/data/resume.yaml (single source of truth).
 // -----------------------------------------------------------------------------
 
 export interface NavItem {
@@ -14,10 +13,10 @@ export interface Stat {
   label: string;
 }
 
-export interface ProjectMeta {
-  tags: string[];
-  href?: string;
-  repo?: string;
+export interface SocialConfig {
+  icon: string;
+  label: string;
+  href: string;
 }
 
 export const siteConfig = {
@@ -51,22 +50,6 @@ export const siteConfig = {
     { value: '95+', label: 'Core Web Vitals' },
   ] satisfies Stat[],
 
-  // Optional social links not present in the resume contact line.
-  extraSocials: [] as { icon: string; label: string; href: string }[],
-
-  // Tech chips per company (keyed by the exact company name parsed from the md).
-  techByCompany: {
-    'Corvic / Codaze': ['Next.js', 'tRPC', 'Three.js', 'WebGL', 'Monorepo', 'Jest'],
-    Embark: ['Next.js', 'Wagmi', 'Viem', 'WalletConnect', 'TailwindCSS'],
-    Youtopin: ['React Native Web', 'Fastlane', 'Docker', 'CI/CD', 'Cypress'],
-    Bakoot: ['React Native', 'React', 'Next.js', 'Leaflet', 'OpenStreetMap'],
-  } as Record<string, string[]>,
-
-  // Visual extras per project (keyed by the exact project name parsed from the md).
-  projectMeta: {
-    'Full-Stack TypeScript Application': {
-      tags: ['Bun', 'Hono', 'tRPC', 'Drizzle', 'Next.js'],
-      repo: 'https://github.com/OmidBadkoubeh',
-    },
-  } as Record<string, ProjectMeta>,
+  // Social links not present in the resume contact line (e.g. X, personal site).
+  extraSocials: [] as SocialConfig[],
 };

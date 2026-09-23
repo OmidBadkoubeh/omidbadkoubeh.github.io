@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
-import { profile } from '../data/portfolio';
+import { getPortfolio } from '../lib/portfolio';
+
+const { profile } = await getPortfolio();
 
 interface Props {
   title?: string;

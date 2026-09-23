@@ -1,6 +1,8 @@
 ---
-import { nav, profile } from '../data/portfolio';
+import { getPortfolio } from '../lib/portfolio';
 import Icon from './Icon.astro';
+
+const { nav, profile } = await getPortfolio();
 
 const initials = profile.name
   .split(' ')

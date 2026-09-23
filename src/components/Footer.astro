@@ -1,6 +1,8 @@
 ---
-import { profile } from '../data/portfolio';
+import { getPortfolio } from '../lib/portfolio';
 import Icon from './Icon.astro';
+
+const { profile } = await getPortfolio();
 
 const year = new Date().getFullYear();
 ---

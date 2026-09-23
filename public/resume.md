@@ -2,7 +2,7 @@
 
 Senior Frontend Engineer
 
-[omid.badkoubeh@gmail.com](mailto:omid.badkoubeh@gmail.com) | [linkedin.com/in/OmidBadkoubeh](https://linkedin.com/in/OmidBadkoubeh) | [github.com/OmidBadkoubeh](https://github.com/OmidBadkoubeh) | Remote
+[omid.badkoubeh@gmail.com](mailto:omid.badkoubeh@gmail.com) | [github.com/OmidBadkoubeh](https://github.com/OmidBadkoubeh) | [linkedin.com/in/OmidBadkoubeh](https://linkedin.com/in/OmidBadkoubeh) | Remote
 
 ## Professional Summary
 
@@ -21,7 +21,7 @@ Senior Frontend Engineer with 7+ years of experience building high-performance, 
 
 ## Professional Experience
 
-### Senior Frontend Engineer, Frontend Team Lead — Corvic
+### Senior Frontend Engineer, Frontend Team Lead — Corvic / Codaze
 
 04/2024 – 05/2026 | Remote
 

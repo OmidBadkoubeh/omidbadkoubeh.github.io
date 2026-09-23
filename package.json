@@ -10,11 +10,13 @@
     "preview": "astro preview",
     "check": "astro check",
     "sync": "astro sync",
-    "resume:pdf": "node scripts/build-resume.ts",
+    "resume": "node scripts/build-resume.ts",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.4"
+    "astro": "^7.3.4",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
