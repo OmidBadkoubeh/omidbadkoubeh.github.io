@@ -50,8 +50,8 @@
 
   --content-width: 68rem;
   --nav-height: 4.25rem;
-  --nav-bg: rgba(11, 11, 16, 0.7);
-  --menu-bg: rgba(11, 11, 16, 0.96);
+  --nav-bg: rgba(11, 11, 16, 0.55);
+  --menu-bg: rgba(11, 11, 16, 0.8);
 
   color-scheme: dark;
 }
@@ -78,8 +78,8 @@
   --gradient-accent: linear-gradient(120deg, #2563eb, #0891b2);
   --shadow-md: 0 4px 20px rgba(15, 23, 42, 0.1);
   --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.16);
-  --nav-bg: rgba(255, 255, 255, 0.72);
-  --menu-bg: rgba(255, 255, 255, 0.97);
+  --nav-bg: rgba(255, 255, 255, 0.55);
+  --menu-bg: rgba(255, 255, 255, 0.82);
 
   color-scheme: light;
 }

@@ -75,9 +75,10 @@ const initials = profile.name
     top: 0;
     z-index: 50;
     background: var(--nav-bg);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-bottom: 1px solid var(--color-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .nav-inner {
@@ -197,6 +198,8 @@ const initials = profile.name
     padding: var(--space-md) var(--space-lg) var(--space-lg);
     border-top: 1px solid var(--color-border);
     background: var(--menu-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
   }
 
   .mobile-menu[data-open] { display: flex; }
