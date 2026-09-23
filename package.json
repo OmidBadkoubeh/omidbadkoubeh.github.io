@@ -5,10 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/build-resume.ts",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "sync": "astro sync",
+    "resume:pdf": "node scripts/build-resume.ts",
     "astro": "astro"
   },
   "dependencies": {
@@ -16,6 +18,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.2",
+    "marked": "^18.0.14",
+    "puppeteer-core": "^25.12.0",
     "typescript": "^5.9.2"
   }
 }

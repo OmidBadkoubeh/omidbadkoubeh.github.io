@@ -30,9 +30,6 @@ import Icon from './Icon.astro';
                   {job.location}
                 </p>
               )}
-
-              <p class="summary text-muted">{job.summary}</p>
-
               <ul class="highlights">
                 {job.highlights.map((h) => (
                   <li>{h}</li>
@@ -119,8 +116,6 @@ import Icon from './Icon.astro';
     font-size: 0.8rem;
     margin-top: var(--space-sm);
   }
-
-  .summary { margin-top: var(--space-md); }
 
   .highlights {
     margin: var(--space-md) 0 0;

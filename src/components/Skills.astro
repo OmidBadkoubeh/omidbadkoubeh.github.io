@@ -32,7 +32,6 @@ import SectionHeading from './SectionHeading.astro';
                 <div>
                   <h3 class="edu-cred">{e.credential}</h3>
                   <p class="edu-inst">{e.institution}</p>
-                  {e.detail && <p class="edu-detail text-muted">{e.detail}</p>}
                 </div>
                 <p class="edu-period mono">{e.period}</p>
               </li>
@@ -94,6 +93,5 @@ import SectionHeading from './SectionHeading.astro';
 
   .edu-cred { font-size: 1.15rem; }
   .edu-inst { color: var(--color-accent-2); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0.2rem; }
-  .edu-detail { margin-top: var(--space-sm); max-width: 52ch; }
   .edu-period { color: var(--color-muted-fg); font-size: 0.82rem; white-space: nowrap; }
 </style>
