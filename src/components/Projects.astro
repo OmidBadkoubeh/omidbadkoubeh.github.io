@@ -1,0 +1,166 @@
+---
+import { projects } from '../data/portfolio';
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="work">
+  <div class="container">
+    <SectionHeading index="03" kicker="Selected work" title="Projects" />
+
+    <div class="grid">
+      {
+        projects.map((project, i) => {
+          const primaryHref = project.href ?? project.repo;
+          return (
+            <article
+              class:list={['project', 'card', 'hud-corners', 'reveal', { 'project--link': primaryHref }]}
+              style={`--reveal-delay: ${i * 80}ms`}
+            >
+              <div class="project-top">
+                <p class="project-tagline mono">{project.tagline}</p>
+                {project.status && <span class="status-chip mono">{project.status}</span>}
+              </div>
+
+              <h3 class="project-name">
+                {primaryHref ? (
+                  <a
+                    class="project-link"
+                    href={primaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {project.name}
+                  </a>
+                ) : (
+                  <span>{project.name}</span>
+                )}
+                {primaryHref && <Icon name="arrow-up-right" size={18} />}
+              </h3>
+
+              <p class="project-desc text-muted">{project.description}</p>
+
+              <div class="project-tags">
+                {project.tags.map((t) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+
+              {project.repo && project.href && (
+                <a
+                  class="repo-link mono"
+                  href={project.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.name} source on GitHub`}
+                >
+                  <Icon name="github" size={16} />
+                  Source
+                </a>
+              )}
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .project {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    min-height: 100%;
+    color: inherit;
+  }
+
+  .project--link { cursor: pointer; }
+
+  .project-link { color: inherit; }
+
+  /* Stretched link: whole card is clickable via the title anchor, without
+     nesting interactive elements. */
+  .project-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+  }
+
+  .project-link:focus-visible { outline: none; }
+  .project--link:has(.project-link:focus-visible) {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 3px;
+  }
+
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .project-tagline {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent-2);
+  }
+
+  .status-chip {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+  }
+
+  .project-name {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.35rem;
+  }
+
+  .project-name :global(svg) {
+    color: var(--color-secondary);
+    transition: transform 200ms ease, color 200ms ease;
+  }
+
+  .project:hover .project-name :global(svg) {
+    color: var(--color-accent-2);
+    transform: translate(2px, -2px);
+  }
+
+  .project-desc { flex: 1; }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .repo-link {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--color-secondary);
+    margin-top: var(--space-xs);
+    width: fit-content;
+  }
+
+  .repo-link:hover { color: var(--color-fg); }
+</style>

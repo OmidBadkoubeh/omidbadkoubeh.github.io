@@ -1,10 +1,52 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Projects from '../components/Projects.astro';
+import Skills from '../components/Skills.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<BaseLayout title="Omid Badkoubeh">
-  <main>
-    <h1>Omid Badkoubeh</h1>
-    <p>Portfolio boilerplate. Content coming soon.</p>
+<BaseLayout>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <About />
+    <Experience />
+    <Projects />
+    <Skills />
+    <Contact />
   </main>
+  <Footer />
 </BaseLayout>
+
+<script is:inline>
+  // Scroll reveal via IntersectionObserver. Reduced-motion users get instant
+  // content (see .reveal rules in global.css).
+  (() => {
+    const els = document.querySelectorAll('.reveal');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
+    );
+
+    els.forEach((el) => io.observe(el));
+  })();
+</script>

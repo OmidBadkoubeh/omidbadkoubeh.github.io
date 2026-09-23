@@ -1,0 +1,113 @@
+---
+import { profile } from '../data/portfolio';
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="contact">
+  <div class="container">
+    <SectionHeading index="05" kicker="Say hello" title="Get in touch" />
+
+    <div class="contact card hud-corners reveal">
+      <div class="contact-copy">
+        <p class="contact-lead">
+          Have a role, a project, or an idea? <br />
+          <span class="text-muted">I read every message.</span>
+        </p>
+        <a class="email mono" href={`mailto:${profile.email}`}>
+          <Icon name="mail" size={18} />
+          {profile.email}
+        </a>
+      </div>
+
+      <div class="contact-actions">
+        <a class="btn btn-primary" href={`mailto:${profile.email}`}>
+          Send a message
+          <Icon name="arrow-up-right" size={16} />
+        </a>
+        <ul class="socials">
+          {
+            profile.socials.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  aria-label={s.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name={s.icon} size={20} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2xl);
+    padding: var(--space-2xl);
+    flex-wrap: wrap;
+  }
+
+  .contact-lead {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.3;
+  }
+
+  .email {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    color: var(--color-accent-2);
+    font-size: 1rem;
+  }
+
+  .email:hover { color: #fff; }
+
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+
+  .socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-secondary);
+    transition: color 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+
+  .socials a:hover {
+    color: #fff;
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 640px) {
+    .contact { padding: var(--space-xl); }
+    .contact-actions { width: 100%; }
+    .contact-actions .btn { width: 100%; }
+  }
+</style>

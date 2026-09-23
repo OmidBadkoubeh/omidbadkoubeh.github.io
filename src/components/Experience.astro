@@ -1,0 +1,160 @@
+---
+import { experience } from '../data/portfolio';
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="experience">
+  <div class="container">
+    <SectionHeading index="02" kicker="Timeline" title="Experience" />
+
+    <ol class="timeline">
+      {
+        experience.map((job, i) => (
+          <li class="entry reveal" style={`--reveal-delay: ${i * 90}ms`}>
+            <div class="marker" aria-hidden="true">
+              <span class="dot" />
+            </div>
+            <article class="entry-body card hud-corners">
+              <header class="entry-head">
+                <div>
+                  <h3 class="role">{job.role}</h3>
+                  <p class="company">{job.company}</p>
+                </div>
+                <p class="period mono">{job.period}</p>
+              </header>
+
+              {job.location && (
+                <p class="location mono">
+                  <Icon name="map-pin" size={14} />
+                  {job.location}
+                </p>
+              )}
+
+              <p class="summary text-muted">{job.summary}</p>
+
+              <ul class="highlights">
+                {job.highlights.map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+
+              {job.stack && (
+                <div class="stack">
+                  {job.stack.map((s) => (
+                    <span class="tag">{s}</span>
+                  ))}
+                </div>
+              )}
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: var(--space-lg);
+  }
+
+  .marker {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 1.75rem;
+  }
+
+  .marker::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -1.5rem;
+    width: 1px;
+    background: linear-gradient(var(--color-accent), transparent);
+  }
+
+  .entry:last-child .marker::before { bottom: 40%; }
+
+  .dot {
+    position: relative;
+    z-index: 1;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 2px solid var(--color-accent);
+    box-shadow: var(--glow-accent);
+  }
+
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .role { font-size: 1.25rem; }
+  .company { color: var(--color-accent-2); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0.2rem; }
+  .period { color: var(--color-muted-fg); font-size: 0.82rem; white-space: nowrap; }
+
+  .location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-muted-fg);
+    font-size: 0.8rem;
+    margin-top: var(--space-sm);
+  }
+
+  .summary { margin-top: var(--space-md); }
+
+  .highlights {
+    margin: var(--space-md) 0 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .highlights li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--color-fg);
+  }
+
+  .highlights li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-size: 0.8rem;
+    top: 0.15rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  @media (max-width: 640px) {
+    .entry { grid-template-columns: 1fr; }
+    .marker { display: none; }
+  }
+</style>

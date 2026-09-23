@@ -1,35 +1,58 @@
 ---
 import '../styles/global.css';
+import { profile } from '../data/portfolio';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
 const {
-  title,
-  description = 'Personal portfolio and resume of Omid Badkoubeh.',
+  title = `${profile.name} — ${profile.role}`,
+  description = `${profile.name} is a ${profile.role.toLowerCase()}. ${profile.tagline}`,
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0b0b10" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
 
-    <!-- Open Graph -->
+    <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <link rel="canonical" href={Astro.url.href} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts: Space Grotesk (display) · Inter (body) · Share Tech Mono (HUD) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+
+    <!-- Swap the no-js fallback class before paint so reveals can animate -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
   </head>
   <body>
+    <div class="backdrop" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
     <slot />
   </body>
 </html>

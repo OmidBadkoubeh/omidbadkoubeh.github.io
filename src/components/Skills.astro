@@ -1,0 +1,99 @@
+---
+import { skills, education } from '../data/portfolio';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section class="section" id="skills">
+  <div class="container">
+    <SectionHeading index="04" kicker="Toolkit" title="Skills & Education" />
+
+    <div class="skills-grid">
+      {
+        skills.map((group, i) => (
+          <div class="skill-card card hud-corners reveal" style={`--reveal-delay: ${i * 70}ms`}>
+            <p class="group-title mono">{group.title}</p>
+            <ul class="chips">
+              {group.items.map((item) => (
+                <li class="tag">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    {
+      education.length > 0 && (
+        <div class="education reveal">
+          <p class="edu-label mono">Education</p>
+          <ul class="edu-list">
+            {education.map((e) => (
+              <li class="edu-item">
+                <div>
+                  <h3 class="edu-cred">{e.credential}</h3>
+                  <p class="edu-inst">{e.institution}</p>
+                  {e.detail && <p class="edu-detail text-muted">{e.detail}</p>}
+                </div>
+                <p class="edu-period mono">{e.period}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .group-title {
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-2);
+    margin-bottom: var(--space-md);
+  }
+
+  .chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .education {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .edu-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted-fg);
+    margin-bottom: var(--space-lg);
+  }
+
+  .edu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-lg); }
+
+  .edu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .edu-cred { font-size: 1.15rem; }
+  .edu-inst { color: var(--color-accent-2); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0.2rem; }
+  .edu-detail { margin-top: var(--space-sm); max-width: 52ch; }
+  .edu-period { color: var(--color-muted-fg); font-size: 0.82rem; white-space: nowrap; }
+</style>
