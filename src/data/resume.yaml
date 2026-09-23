@@ -100,7 +100,7 @@ projects:
   - name: Full-Stack TypeScript Application
     meta: Personal Project
     status: In Progress
-    tags: [Bun, Hono, tRPC, Drizzle, Next.js]
+    tags: [Bun, Hono, tRPC, Drizzle, Next.js, PostgresQL, AI]
     repo: https://github.com/OmidBadkoubeh
     highlights:
       - "Designing and building a full-stack TypeScript product end-to-end: backend with Bun, Hono, tRPC, and Drizzle ORM; frontends with Next.js."
