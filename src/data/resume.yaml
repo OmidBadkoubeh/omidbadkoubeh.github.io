@@ -20,6 +20,12 @@ summary: >-
   cross-platform development, growing into full-stack TypeScript. Owns technical
   decisions and design systems in distributed teams.
 
+metrics:
+  - { value: 10M, label: WebGL nodes at 60fps }
+  - { value: 2×+, label: faster feature delivery }
+  - { value: ~10K, label: monthly users served }
+  - { value: 1h→20m, label: deploy time }
+
 skills:
   - title: Languages
     items: [TypeScript, JavaScript (ES6+), Python, HTML5, CSS3]

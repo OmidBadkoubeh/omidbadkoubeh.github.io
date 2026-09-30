@@ -43,6 +43,11 @@ export const educationSchema = z.object({
   period: z.string(),
 });
 
+export const metricSchema = z.object({
+  value: z.string(),
+  label: z.string(),
+});
+
 export const resumeSchema = z.object({
   name: z.string(),
   role: z.string(),
@@ -54,6 +59,8 @@ export const resumeSchema = z.object({
   experience: z.array(experienceSchema).default([]),
   projects: z.array(projectSchema).default([]),
   education: z.array(educationSchema).default([]),
+  /** Headline numbers for the PDF sidebar. */
+  metrics: z.array(metricSchema).default([]),
 });
 
 export type ResumeLink = z.infer<typeof linkSchema>;
