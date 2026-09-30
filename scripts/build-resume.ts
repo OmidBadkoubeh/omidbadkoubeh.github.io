@@ -114,13 +114,13 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8" />
 <title>${esc(resume.name)} — Resume</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" />
 <style>
   @page { size: A4; margin: 0; }
   :root {
     --ink: #14161c; --body: #262a33; --muted: #6b7080; --accent: #2b47c9;
     --rule: #dcdee4; --side: #f1f2f6;
-    --display: 'Archivo', 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    --display: 'Space Grotesk', 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
     --sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
     --mono: 'IBM Plex Mono', ui-monospace, monospace;
   }
@@ -135,10 +135,10 @@ const html = `<!doctype html>
   .main { padding: 11mm 9mm 10mm 11.5mm; }
   .side { padding: 12mm 7mm 10mm 7mm; background: var(--side); }
 
-  .hero h1 { font: 800 31pt/1.05 var(--display); letter-spacing: -0.02em; color: var(--ink); }
+  .hero h1 { font: 700 31pt/1.05 var(--display); letter-spacing: -0.02em; color: var(--ink); }
   .role { font: 700 13.5pt/1.3 var(--display); color: var(--accent); margin: 3px 0 18px; }
   .running { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; }
-  .running strong { font: 800 12pt var(--display); color: var(--ink); }
+  .running strong { font: 700 12pt var(--display); color: var(--ink); }
   .running span { font: 8.5pt var(--mono); color: var(--muted); }
 
   h2 { font: 500 8pt var(--mono); letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink); }
@@ -161,7 +161,7 @@ const html = `<!doctype html>
   .contact dt { font: 8.8pt var(--mono); color: var(--muted); }
   .contact dd { margin-bottom: 9px; font-size: 9.4pt; }
   .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
-  .metrics dt { font: 800 17pt/1.15 var(--display); color: var(--accent); letter-spacing: -0.01em; }
+  .metrics dt { font: 700 17pt/1.15 var(--display); color: var(--accent); letter-spacing: -0.01em; }
   .metrics dd { font-size: 8.6pt; line-height: 1.35; color: var(--muted); }
   .skill { margin-bottom: 7px; }
   .skill h4 { font-weight: 600; font-size: 9.2pt; color: var(--ink); }
