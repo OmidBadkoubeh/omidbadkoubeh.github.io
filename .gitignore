@@ -4,6 +4,7 @@ dist/
 # agent harness tooling (not part of the site)
 .agents/
 skills-lock.json
+.omp/
 # generated types
 .astro/
 

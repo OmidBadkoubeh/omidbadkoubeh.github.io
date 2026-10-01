@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import { getPortfolio } from '../lib/portfolio';
 
 const { profile } = await getPortfolio();
@@ -44,6 +45,7 @@ const personLd = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0b0b10" />
+    <ClientRouter />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -89,10 +91,22 @@ const personLd = {
         } catch (e) {}
         document.documentElement.classList.remove('no-js');
       })();
+      document.addEventListener('astro:after-swap', function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+        document.documentElement.classList.remove('no-js');
+      });
     </script>
   </head>
   <body>
-    <div class="backdrop" aria-hidden="true"></div>
+    <div class="backdrop" aria-hidden="true" transition:persist></div>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
   </body>

@@ -7,7 +7,7 @@ const { profile } = await getPortfolio();
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
+<footer class="footer" transition:name="site-footer">
   <div class="container footer-inner">
     <p class="copy mono">
       © {year} {profile.name}

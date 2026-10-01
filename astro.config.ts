@@ -5,6 +5,11 @@ export default defineConfig({
   // Deployed URL. This is a GitHub user site (repo: OmidBadkoubeh.github.io),
   // so it is served from the domain root and needs no `base`.
   site: 'https://omidbadkoubeh.github.io',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
+
 
   vite: {
     build: {
