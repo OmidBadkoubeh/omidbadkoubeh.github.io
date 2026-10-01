@@ -23,10 +23,10 @@ import Footer from '../components/Footer.astro';
   <Footer />
 </BaseLayout>
 
-<script is:inline>
+<script>
   // Scroll reveal via IntersectionObserver. Reduced-motion users get instant
   // content (see .reveal rules in global.css).
-  (() => {
+  document.addEventListener('astro:page-load', () => {
     const els = document.querySelectorAll('.reveal');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -48,5 +48,5 @@ import Footer from '../components/Footer.astro';
     );
 
     els.forEach((el) => io.observe(el));
-  })();
+  });
 </script>

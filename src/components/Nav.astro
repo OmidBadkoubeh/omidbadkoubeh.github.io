@@ -10,11 +10,14 @@ const initials = profile.name
   .join('')
   .slice(0, 2)
   .toUpperCase();
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isResume = pathname === '/resume';
 ---
 
-<header class="nav" data-nav>
+<header class="nav" data-nav transition:name="site-nav">
   <div class="nav-inner container">
-    <a class="brand" href="#top" aria-label={`${profile.name} — home`}>
+    <a class="brand" href={isResume ? '/' : '#top'} aria-label={`${profile.name} — home`} transition:name="site-brand">
       <span class="brand-mark" aria-hidden="true">{initials}</span>
       <span class="brand-name">{profile.name}</span>
     </a>
@@ -22,7 +25,7 @@ const initials = profile.name
     <nav class="nav-links" aria-label="Primary">
       {
         nav.map((item) => (
-          <a href={item.href} data-nav-link>
+          <a href={isResume ? `/${item.href}` : item.href} data-nav-link>
             {item.label}
           </a>
         ))
@@ -39,7 +42,7 @@ const initials = profile.name
         <Icon name="sun" size={18} class="i-sun" />
         <Icon name="moon" size={18} class="i-moon" />
       </button>
-      <a class="btn btn-ghost nav-resume" href={profile.resumeUrl}>
+      <a class="btn btn-ghost nav-resume" href="/resume">
         <Icon name="download" size={16} />
         Resume
       </a>
@@ -59,12 +62,12 @@ const initials = profile.name
   <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
     {
       nav.map((item) => (
-        <a href={item.href} data-nav-link data-mobile-link>
+        <a href={isResume ? `/${item.href}` : item.href} data-nav-link data-mobile-link>
           {item.label}
         </a>
       ))
     }
-    <a class="btn btn-primary mobile-resume" href={profile.resumeUrl}>
+    <a class="btn btn-primary mobile-resume" href="/resume">
       <Icon name="download" size={16} />
       Download résumé
     </a>
@@ -212,7 +215,9 @@ const initials = profile.name
     border-bottom: 1px solid var(--color-border);
   }
 
-  .mobile-menu a[data-mobile-link][aria-current='true'] { color: var(--color-accent-2); }
+  .mobile-menu a[data-mobile-link][aria-current='true'] {
+    color: var(--color-accent-2);
+  }
 
   .mobile-resume { margin-top: var(--space-md); }
 
@@ -223,12 +228,13 @@ const initials = profile.name
   }
 </style>
 
-<script is:inline>
-  (() => {
-    const toggle = document.querySelector('[data-nav-toggle]');
-    const menu = document.querySelector('[data-mobile-menu]');
-    if (toggle && menu) {
-      const setOpen = (open) => {
+<script>
+  function initNav() {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+    const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+    if (toggle && menu && !toggle.hasAttribute('data-bound')) {
+      toggle.setAttribute('data-bound', 'true');
+      const setOpen = (open: boolean) => {
         if (open) {
           menu.hidden = false;
           menu.setAttribute('data-open', '');
@@ -248,12 +254,12 @@ const initials = profile.name
     }
 
     // Theme toggle. The head bootstrap already set data-theme before paint.
-    const themeBtn = document.querySelector('[data-theme-toggle]');
-    const meta = document.querySelector('meta[name="theme-color"]');
-    const colors = { dark: '#0b0b10', light: '#f4f6fb' };
-    const syncTheme = (t) => {
+    const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    const colors: Record<string, string> = { dark: '#0b0b10', light: '#f4f6fb' };
+    const syncTheme = (t: string) => {
       document.documentElement.setAttribute('data-theme', t);
-      if (meta) meta.setAttribute('content', colors[t]);
+      if (meta && colors[t]) meta.setAttribute('content', colors[t]);
       if (themeBtn) {
         themeBtn.setAttribute('aria-pressed', String(t === 'light'));
         themeBtn.setAttribute(
@@ -264,39 +270,48 @@ const initials = profile.name
     };
     if (themeBtn) {
       syncTheme(document.documentElement.getAttribute('data-theme') || 'dark');
-      themeBtn.addEventListener('click', () => {
-        const next =
-          document.documentElement.getAttribute('data-theme') === 'light'
-            ? 'dark'
-            : 'light';
-        try {
-          localStorage.setItem('theme', next);
-        } catch (e) {}
-        syncTheme(next);
-      });
+      if (!themeBtn.hasAttribute('data-bound')) {
+        themeBtn.setAttribute('data-bound', 'true');
+        themeBtn.addEventListener('click', () => {
+          const next =
+            document.documentElement.getAttribute('data-theme') === 'light'
+              ? 'dark'
+              : 'light';
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+          syncTheme(next);
+        });
+      }
     }
 
     // Active-section highlight via IntersectionObserver.
     const links = Array.from(document.querySelectorAll('[data-nav-link]'));
-    const byId = new Map();
+    const byId = new Map<string, Element[]>();
     links.forEach((l) => {
-      const id = l.getAttribute('href')?.slice(1);
+      const href = l.getAttribute('href') || '';
+      const id = href.includes('#') ? href.split('#')[1] : null;
       if (!id) return;
-      if (!byId.has(id)) byId.set(id, []);
-      byId.get(id).push(l);
+      const group = byId.get(id) ?? [];
+      group.push(l);
+      byId.set(id, group);
     });
     const sections = Array.from(byId.keys())
       .map((id) => document.getElementById(id))
-      .filter(Boolean);
+      .filter((el): el is HTMLElement => el !== null);
 
     if ('IntersectionObserver' in window && sections.length) {
-      const setCurrent = (id) => {
-        links.forEach((l) =>
-          l.setAttribute(
-            'aria-current',
-            l.getAttribute('href') === `#${id}` ? 'true' : 'false'
-          )
-        );
+      const setCurrent = (id: string) => {
+        links.forEach((l) => {
+          const href = l.getAttribute('href') || '';
+          const linkId = href.includes('#') ? href.split('#')[1] : '';
+          if (linkId) {
+            l.setAttribute(
+              'aria-current',
+              linkId === id ? 'true' : 'false'
+            );
+          }
+        });
       };
       const io = new IntersectionObserver(
         (entries) => {
@@ -309,5 +324,7 @@ const initials = profile.name
       );
       sections.forEach((s) => io.observe(s));
     }
-  })();
+  }
+
+  document.addEventListener('astro:page-load', initNav);
 </script>
