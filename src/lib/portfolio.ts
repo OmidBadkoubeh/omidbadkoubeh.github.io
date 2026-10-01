@@ -12,6 +12,7 @@ import type {
   ExperienceEntry,
   SkillGroup,
   EducationEntry,
+  MetricEntry,
 } from '../schemas/resume';
 
 export interface SocialLink {
@@ -57,6 +58,9 @@ export interface Portfolio {
   projects: ProjectView[];
   skills: SkillGroup[];
   education: EducationEntry[];
+  metrics: MetricEntry[];
+  summary: string;
+  rawResume: Resume;
 }
 
 const ICON_BY_KIND: Record<ResumeLink['kind'], string> = {
@@ -107,6 +111,9 @@ export function buildPortfolio(resume: Resume): Portfolio {
     })),
     skills: resume.skills,
     education: resume.education,
+    metrics: resume.metrics,
+    summary: resume.summary,
+    rawResume: resume,
   };
 }
 

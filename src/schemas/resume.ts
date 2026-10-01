@@ -68,4 +68,5 @@ export type SkillGroup = z.infer<typeof skillGroupSchema>;
 export type ExperienceEntry = z.infer<typeof experienceSchema>;
 export type ProjectEntry = z.infer<typeof projectSchema>;
 export type EducationEntry = z.infer<typeof educationSchema>;
+export type MetricEntry = z.infer<typeof metricSchema>;
 export type Resume = z.infer<typeof resumeSchema>;
